@@ -1,10 +1,12 @@
+#include "display.h"
 #include "editor.h"
-#include "terminal.h"
 
 int main() {
     enable_raw_mode();
+    init_editor();
 
     while (1) {
+        refresh_screen();
         process_keypress();
     }
 
