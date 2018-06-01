@@ -23,12 +23,45 @@ char read_key() {
     return c;
 }
 
+// move_cursor updates cursor coordinates based on the key pressed.
+void move_cursor(char key) {
+    switch (key) {
+        case 'h':
+            if (E.cx != 0) {
+                E.cx--;
+            }
+            break;
+        case 'l':
+            if (E.cx != E.screencols) {
+                E.cx++;
+            }
+            break;
+        case 'k':
+            if (E.cy != 0) {
+                E.cy--;
+            }
+            break;
+        case 'j':
+            if (E.cy != E.screenrows) {
+                E.cy++;
+            }
+            break;
+    }
+}
+
 void process_keypress() {
     char c = read_key();
     switch (c) {
         case CTRL_KEY('q'):
             clear_screen();
             exit(0);
+
+        case 'h':
+        case 'l':
+        case 'k':
+        case 'j':
+            move_cursor(c);
+            break;
 
 #ifdef DEBUG
         case iscntrl(c):
@@ -99,6 +132,9 @@ int get_window_size(int *rows, int *cols) {
 
 // init_editor initializes editor state.
 void init_editor() {
+    E.cx = 0;
+    E.cy = 0;
+
     if (get_window_size(&E.screenrows, &E.screencols) == -1) {
         die("get_window_size");
     }

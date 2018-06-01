@@ -2,7 +2,7 @@ CC   = gcc
 OBJ  = ./obj
 SRC  = ./src
 INC  = -I./include
-OBJS = $(addprefix $(OBJ)/, $(subst .c,.o, $(subst $(SRC),,$(wildcard $(SRC)/*.c))))
+OBJS = $(addprefix $(OBJ), $(subst .c,.o, $(subst $(SRC),,$(wildcard $(SRC)/*.c))))
 
 all:
 	mkdir -p $(OBJ)
