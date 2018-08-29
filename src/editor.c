@@ -12,6 +12,16 @@
 // character to 0.
 #define CTRL_KEY(k) ((k)&0x1f)
 
+// init_editor initializes editor state.
+void init_editor() {
+    E.cx = 0;
+    E.cy = 0;
+
+    if (get_window_size(&E.screenrows, &E.screencols) == -1) {
+        die("get_window_size");
+    }
+}
+
 char read_key() {
     int nread;
     char c;
@@ -24,6 +34,7 @@ char read_key() {
 }
 
 // move_cursor updates cursor coordinates based on the key pressed.
+// The key-bindings used are in correspondence to those in vim.
 void move_cursor(char key) {
     switch (key) {
         case 'h':
@@ -128,14 +139,4 @@ int get_window_size(int *rows, int *cols) {
     *rows = ws.ws_row;
     *cols = ws.ws_col;
     return 0;
-}
-
-// init_editor initializes editor state.
-void init_editor() {
-    E.cx = 0;
-    E.cy = 0;
-
-    if (get_window_size(&E.screenrows, &E.screencols) == -1) {
-        die("get_window_size");
-    }
 }
